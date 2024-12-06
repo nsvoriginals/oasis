@@ -1,86 +1,107 @@
+# SkyOffice ![License](https://img.shields.io/badge/license-MIT-blue) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)
 
-# OASIS-2D metaverse 
+<img alt="Logo" align="right" src="https://user-images.githubusercontent.com/11501902/139942585-a6b044ce-3695-460a-91bd-dd9f1d4611c8.png" width="20%" />
 
- Oasis is a 2D Metaverse platform designed to redefine virtual meetings and collaboration. The application provides users with the ability to create and customize virtual rooms, enabling seamless real-time audio and video communication. It serves as a dynamic environment for collaboration, fostering innovative and engaging ways for individuals and teams to connect virtually.
+An immersive virtual office - Winner of [2021 Monte Jade Innovation Competition](https://www.montejadese.org/innovation-competition)
 
+- Come try it out - [Official Website](https://sky-office.co/)
+- Why we built this - [Concept Video](https://www.youtube.com/watch?v=BpDqGTPh8pc)
+- 🙌 Get latest updates? Follow our [Twitter](https://twitter.com/SkyOfficeApp).
+- 💕 Love this project? Consider [buy me a coffee](https://www.buymeacoffee.com/skyoffice).
 
-## Table of Contents
-- [About the Project](#about-the-project)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+SkyOffice works on all PC browsers (mobile browsers are currently not supported)
+
+## Built with
+
+- [Phaser3](https://github.com/photonstorm/phaser) - Game engine
+- [Colyseus](https://github.com/colyseus/colyseus) - WebSocket-based server framework
+- [React/Redux](https://github.com/facebook/react) - Front-end framework
+- [PeerJS](https://github.com/peers/peerjs) - WebRTC for video/screen sharing
+- [TypeScript](https://github.com/microsoft/TypeScript) and [ES6](https://github.com/eslint/eslint) - for both client and server sides
 
 ## Features
-- Create customizable 2D virtual rooms.
-- Real-time audio and video communication using WebRTC.
-- Collaborative tools like shared whiteboards and document sharing.
-- Cross-platform compatibility for web, desktop, and mobile devices.
-- Secure end-to-end encryption for all communications.
 
+- [Proximity Chat](#proximity-chat-distance-based-interactive-system)
+- [Flexible Screen Sharing](#flexible--immediate-screen-sharing)
+- [Multifunctional Rooms](#multifunctional-rooms)
+- [Text Message Chat](#text-message-chat-with-real-time-dialog-bubbles)
+- [Custom/Private Rooms](#customprivate-rooms)
+- [Embedded Whiteboards](#embedded-whiteboards) (iframe embed of [WBO](https://github.com/lovasoa/whitebophir))
 
-## Installation
+### Proximity Chat (distance-based interactive system)
 
-### Prerequisites
-- Node.js (v16+)
-- npm or Yarn
-- Docker (optional, for deployment)
+![image](https://user-images.githubusercontent.com/11501902/139960852-cf0e0883-8fbe-459d-bb11-3707d0ae1360.png)
 
-### Steps
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/nsvoriginals/oasis.git
-   cd repo-name
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm start
-   ```
+### Multifunctional Rooms
 
+![image](https://user-images.githubusercontent.com/11501902/139961091-1801bd4d-fbd6-4400-8503-85ece744e979.png)
 
-## Usage
+### Flexible & Immediate Screen Sharing
 
-1. Start the application by running:
-   ```bash
-   npm start
-   ```
-2. Access the platform via `http://localhost:3000`.
+![image](https://user-images.githubusercontent.com/11501902/139961155-44a85cd9-ac25-4563-9d82-6537ed7435f6.png)
 
-### Example Screenshot:
-![Screenshot](path/to/screenshot.png)
+### Text Message Chat (with real time dialog bubbles)
 
+![image](https://user-images.githubusercontent.com/11501902/145925423-3b5b9026-d3b9-429d-920b-98b0bcd6300a.png)
 
-## Technologies Used
-- **Frontend:** React.js, WebRTC
-- **Backend:** Node.js, Express.js
-- **Database:** PostgreSQL
-- **Others:** Socket.IO, Docker, AWS
+### Embedded Whiteboards
 
-## Contributing
+![image](https://user-images.githubusercontent.com/11501902/147785323-19dbf0e6-056d-44c5-8efe-e969297bbe52.png)
 
-Contributions are always welcome!  
-To contribute:
-1. Fork the project.
-2. Create a feature branch:
-   ```bash
-   git checkout -b feature-name
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Add feature-name"
-   ```
-4. Push to your branch:
-   ```bash
-   git push origin feature-name
-   ```
-5. Open a Pull Request.
+### Custom/Private Rooms
+
+![image](https://user-images.githubusercontent.com/11501902/147784118-15ef50bf-0f67-4704-89d7-81b2fa7f8ceb.png)
+
+## Controls
+
+- `W, A, S, D, or arrow keys` to move (video chat will start if you are close to someone else)
+- `E` to sit down
+- `R` to use computer (for screen sharing)
+- `Enter` to open chat
+- `ESC` to close chat
+
+## Prerequisites
+
+You'll need [Node.js](https://nodejs.org/en/), [npm](https://www.npmjs.com/) installed.
+
+## Getting Started
+
+Clone this repository to your local machine:
+
+```bash
+git clone https://github.com/kevinshen56714/SkyOffice.git
+```
+
+This will create a folder named `SkyOffice`. You can specify a different folder name like this:
+
+```bash
+git clone https://github.com/kevinshen56714/SkyOffice.git my-folder-name
+```
+
+To start a server, go into the project folder and install dependencies/run start command:
+
+```bash
+cd SkyOffice or 'my-folder-name'
+yarn && yarn start
+```
+
+To start a client, go into the client folder and install dependencies/run start command:
+
+```bash
+cd SkyOffice/client or 'my-folder-name/client'
+yarn && yarn dev
+```
+
+## Credits 🎉
+
+Big thanks to this great repo - [ourcade/phaser3-typescript-parcel-template](https://github.com/ourcade/phaser3-typescript-parcel-template)
+
+Big thanks to pixel artist - [LimeZu](https://limezu.itch.io/)
+
+Big thanks to open-source whiteboard project - [WBO](https://github.com/lovasoa/whitebophir)
 
 ## License
-Distributed under the MIT License. See `LICENSE` for more information.
+
+This project is licensed under MIT.
+
+If you're using SkyOffice to power your virtual office or using our code in other projects, please consider [buy me a coffee](https://www.buymeacoffee.com/skyoffice). Thank you :)

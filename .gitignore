@@ -1,2 +1,5 @@
-oasis-backend/node_modules/
-oasis-client/node_modules/
+/.cache
+/dist
+node_modules
+/.DS_Store
+/server/lib
