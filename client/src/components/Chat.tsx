@@ -8,7 +8,6 @@ import InputBase from '@mui/material/InputBase'
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import CloseIcon from '@mui/icons-material/Close'
-import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
 
 import phaserGame from '../PhaserGame'

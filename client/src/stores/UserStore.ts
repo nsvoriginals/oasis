@@ -20,7 +20,7 @@ export const userSlice =createSlice({
         showJoystick:window.innerWidth<650
     },
     reducers:{
-       toogleBackgroundMode:(state)=>{
+       toggleBackgroundMode:(state)=>{
         const newMode=state.backgroundMode===BackgroundMode.DAY ? BackgroundMode.NIGHT :BackgroundMode.DAY
         state.backgroundMode=newMode   
         const Bootstrap=phaserGame.scene.keys.bootstrap as Bootstrap
@@ -52,7 +52,7 @@ export const userSlice =createSlice({
 
   
   export const {
-    toogleBackgroundMode,
+    toggleBackgroundMode,
     setSessionId,
     setVideoConnected,
     setLoggedIn,

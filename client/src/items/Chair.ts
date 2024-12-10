@@ -1,5 +1,6 @@
 import { ItemType } from "../../../types/Items";
 import Item from "./Item";
+import Phaser from 'phaser'
 
 export default class Chair extends Item{
     itemDirection?:string

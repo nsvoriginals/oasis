@@ -34,7 +34,7 @@ setJoinedRoomData:(state,action:PayloadAction<{id:string,name:string,description
         state.roomName=action.payload.name
         state.roomDescription=action.payload.description
     },
-    setAvailabeRooms:(state,action:PayloadAction<RoomAvailable[]>)=>{
+    setAvailableRooms:(state,action:PayloadAction<RoomAvailable[]>)=>{
        state.availableRooms=action.payload.filter((room)=>isCustomRoom(room))
     },
 
@@ -59,7 +59,7 @@ export const {
     setLobbyJoined,
     setJoinedRoomData,
     setRoomJoined,
-    setAvailabeRooms,
+    setAvailableRooms,
     addAvailableRooms,
     removeAvailableRooms
 }=roomSlice.actions

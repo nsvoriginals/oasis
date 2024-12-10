@@ -1,11 +1,23 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import 'regenerator-runtime/runtime'
 import React from 'react'
+import { createRoot } from 'react-dom/client'
+import { Provider } from 'react-redux'
+import { ThemeProvider } from '@mui/material/styles'
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+import './index.css'
+import './PhaserGame'
+import muiTheme from './MuiTheme'
+import App from './App'
+import store from './stores'
+
+const root = document.getElementById('root')
+
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <ThemeProvider theme={muiTheme}>
+        <App />
+      </ThemeProvider>
+    </Provider>
+  </React.StrictMode>
 )
