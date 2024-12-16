@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
@@ -119,10 +120,12 @@ const Sidebar = () => {
     <SidebarContainer>
       {/* Sidebar buttons */}
       <Tooltip title="Home" placement="right">
+      <Link to="/route" style={{ textDecoration: 'none' }}>
         <SidebarButton>
           <HomeIcon />
         </SidebarButton>
-      </Tooltip>
+      </Link>
+    </Tooltip>
      
       
       <Tooltip title="Chat" placement="right">
