@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IChatMessage } from '../../../types/IOfficeState'
-import phaserGame from '../PhaserGame'
-import Game from '../scenes/Game'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IChatMessage } from "../../../types/IOfficeState";
+import phaserGame from "../PhaserGame";
+import Game from "../scenes/Game";
 
 export enum MessageType {
   PLAYER_JOINED,
@@ -10,9 +10,12 @@ export enum MessageType {
 }
 
 export const chatSlice = createSlice({
-  name: 'chat',
+  name: "chat",
   initialState: {
-    chatMessages: new Array<{ messageType: MessageType; chatMessage: IChatMessage }>(),
+    chatMessages: new Array<{
+      messageType: MessageType;
+      chatMessage: IChatMessage;
+    }>(),
     focused: false,
     showChat: true,
   },
@@ -21,7 +24,7 @@ export const chatSlice = createSlice({
       state.chatMessages.push({
         messageType: MessageType.REGULAR_MESSAGE,
         chatMessage: action.payload,
-      })
+      });
     },
     pushPlayerJoinedMessage: (state, action: PayloadAction<string>) => {
       state.chatMessages.push({
@@ -29,9 +32,9 @@ export const chatSlice = createSlice({
         chatMessage: {
           createdAt: new Date().getTime(),
           author: action.payload,
-          content: 'joined the lobby',
+          content: "joined the lobby",
         } as IChatMessage,
-      })
+      });
     },
     pushPlayerLeftMessage: (state, action: PayloadAction<string>) => {
       state.chatMessages.push({
@@ -39,20 +42,20 @@ export const chatSlice = createSlice({
         chatMessage: {
           createdAt: new Date().getTime(),
           author: action.payload,
-          content: 'left the lobby',
+          content: "left the lobby",
         } as IChatMessage,
-      })
+      });
     },
     setFocused: (state, action: PayloadAction<boolean>) => {
-      const game = phaserGame.scene.keys.game as Game
-      action.payload ? game.disableKeys() : game.enableKeys()
-      state.focused = action.payload
+      const game = phaserGame.scene.keys.game as Game;
+      action.payload ? game.disableKeys() : game.enableKeys();
+      state.focused = action.payload;
     },
     setShowChat: (state, action: PayloadAction<boolean>) => {
-      state.showChat = action.payload
+      state.showChat = action.payload;
     },
   },
-})
+});
 
 export const {
   pushChatMessage,
@@ -60,6 +63,6 @@ export const {
   pushPlayerLeftMessage,
   setFocused,
   setShowChat,
-} = chatSlice.actions
+} = chatSlice.actions;
 
-export default chatSlice.reducer
+export default chatSlice.reducer;

@@ -1,9 +1,14 @@
-import bcrypt from 'bcrypt';
-import { Room, Client, ServerError } from 'colyseus';
-import { Dispatcher } from '@colyseus/command';
-import { Player, OfficeState, Computer, Whiteboard } from './schema/OfficeState';
-import mongoose from 'mongoose';
-import connectDB from '../db';
+import bcrypt from "bcrypt";
+import { Room, Client, ServerError } from "colyseus";
+import { Dispatcher } from "@colyseus/command";
+import {
+  Player,
+  OfficeState,
+  Computer,
+  Whiteboard,
+} from "./schema/OfficeState";
+import mongoose from "mongoose";
+import connectDB from "../db";
 
 connectDB();
 
@@ -15,14 +20,19 @@ const roomSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const RoomModel = mongoose.model('Room', roomSchema);
+const RoomModel = mongoose.model("Room", roomSchema);
 
 export class Oasis extends Room<OfficeState> {
   public dispatcher = new Dispatcher(this);
   public name: string;
   public description: string;
   public password: string | null = null;
-  async onCreate(options: { name: string; description: string; password?: string | null; autoDispose: boolean }) {
+  async onCreate(options: {
+    name: string;
+    description: string;
+    password?: string | null;
+    autoDispose: boolean;
+  }) {
     const { name, description, password, autoDispose } = options;
 
     this.name = name;
@@ -61,9 +71,12 @@ export class Oasis extends Room<OfficeState> {
 
   async onAuth(client: Client, options: { password: string | null }) {
     if (this.password) {
-      const validPassword = await bcrypt.compare(options.password, this.password);
+      const validPassword = await bcrypt.compare(
+        options.password,
+        this.password,
+      );
       if (!validPassword) {
-        throw new ServerError(403, 'Password is incorrect!');
+        throw new ServerError(403, "Password is incorrect!");
       }
     }
     return true;
@@ -71,7 +84,7 @@ export class Oasis extends Room<OfficeState> {
 
   onJoin(client: Client, options: any) {
     this.state.players.set(client.sessionId, new Player());
-    client.send('SEND_ROOM_DATA', {
+    client.send("SEND_ROOM_DATA", {
       id: this.roomId,
       name: this.name,
       description: this.description,
@@ -105,10 +118,15 @@ export class Oasis extends Room<OfficeState> {
 export class ExtendedRoom extends Oasis {
   private roomModel: mongoose.Model<any>;
 
-  async onCreate(options: { name: string; description: string; password?: string | null; autoDispose: boolean }) {
+  async onCreate(options: {
+    name: string;
+    description: string;
+    password?: string | null;
+    autoDispose: boolean;
+  }) {
     await super.onCreate(options);
 
-    this.roomModel = mongoose.model('Room', roomSchema, 'rooms');
+    this.roomModel = mongoose.model("Room", roomSchema, "rooms");
     const newRoom = new this.roomModel({
       roomId: this.roomId,
       name: this.name,

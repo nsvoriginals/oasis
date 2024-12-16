@@ -1,18 +1,17 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 const muiTheme = createTheme({
   typography: {
-    fontFamily: 'Heming, Arial, sans-serif', // Add your custom font here
+    fontFamily: "Heming, Arial, sans-serif", // Add your custom font here
   },
   palette: {
-    mode: 'dark',
+    mode: "dark",
     primary: {
-      main: '#8c51fe',
+      main: "#8c51fe",
     },
     secondary: {
-      main: '#ffffff',
+      main: "#ffffff",
     },
-    
   },
 });
 

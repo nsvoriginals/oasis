@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-import IconButton from '@mui/material/IconButton'
-import CloseIcon from '@mui/icons-material/Close'
+import React from "react";
+import styled from "styled-components";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
-import { useAppSelector, useAppDispatch } from '../hooks'
-import { closeWhiteboardDialog } from '../stores/WhiteboardStore'
+import { useAppSelector, useAppDispatch } from "../hooks";
+import { closeWhiteboardDialog } from "../stores/WhiteboardStore";
 
 const Backdrop = styled.div`
   position: fixed;
@@ -16,7 +16,7 @@ const Backdrop = styled.div`
   padding: 20px 250px 16px 16px;
   width: 100%;
   height: 100%;
-`
+`;
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -35,7 +35,7 @@ const Wrapper = styled.div`
     top: 0px;
     right: 0px;
   }
-`
+`;
 
 const WhiteboardWrapper = styled.div`
   flex: 1;
@@ -48,11 +48,13 @@ const WhiteboardWrapper = styled.div`
     height: 100%;
     background: #fff;
   }
-`
+`;
 
 export default function WhiteboardDialog() {
-  const whiteboardUrl = useAppSelector((state) => state.whiteboard.whiteboardUrl)
-  const dispatch = useAppDispatch()
+  const whiteboardUrl = useAppSelector(
+    (state) => state.whiteboard.whiteboardUrl,
+  );
+  const dispatch = useAppDispatch();
 
   return (
     <Backdrop>
@@ -71,5 +73,5 @@ export default function WhiteboardDialog() {
         )}
       </Wrapper>
     </Backdrop>
-  )
+  );
 }

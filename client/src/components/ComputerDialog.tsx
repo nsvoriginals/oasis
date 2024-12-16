@@ -1,14 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
-import IconButton from '@mui/material/IconButton'
-import CloseIcon from '@mui/icons-material/Close'
-import ScreenShareIcon from '@mui/icons-material/ScreenShare'
-import StopScreenShareIcon from '@mui/icons-material/StopScreenShare'
+import React from "react";
+import styled from "styled-components";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import ScreenShareIcon from "@mui/icons-material/ScreenShare";
+import StopScreenShareIcon from "@mui/icons-material/StopScreenShare";
 
-import { useAppSelector, useAppDispatch } from '../hooks'
-import { closeComputerDialog } from '../stores/ComputerStore'
+import { useAppSelector, useAppDispatch } from "../hooks";
+import { closeComputerDialog } from "../stores/ComputerStore";
 
-import Video from './Video'
+import Video from "./Video";
 
 const Backdrop = styled.div`
   position: fixed;
@@ -18,11 +18,11 @@ const Backdrop = styled.div`
   height: 100%;
   overflow: hidden;
   padding: 16px 250px 16px 16px;
-`
+`;
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  background:rgb(218, 218, 218);
+  background: rgb(218, 218, 218);
   border-radius: 16px;
   padding: 16px;
   color: #eee;
@@ -36,9 +36,8 @@ const Wrapper = styled.div`
     position: absolute;
     top: 0px;
     right: 0px;
-    
   }
-`
+`;
 
 const VideoGrid = styled.div`
   flex: 1;
@@ -71,18 +70,19 @@ const VideoGrid = styled.div`
       color: #fff;
       overflow: hidden;
       text-overflow: ellipsis;
-      text-shadow: 0 1px 2px rgb(0 0 0 / 60%), 0 0 2px rgb(0 0 0 / 30%);
+      text-shadow:
+        0 1px 2px rgb(0 0 0 / 60%),
+        0 0 2px rgb(0 0 0 / 30%);
       white-space: nowrap;
     }
   }
-`
+`;
 
 const IconTextWrapper = styled.div`
   display: flex;
   align-items: center;
   color: #000000;
-
-`
+`;
 
 function VideoContainer({ playerName, stream }) {
   return (
@@ -90,15 +90,17 @@ function VideoContainer({ playerName, stream }) {
       <Video srcObject={stream} autoPlay></Video>
       {playerName && <div className="player-name">{playerName}</div>}
     </div>
-  )
+  );
 }
 
 export default function ComputerDialog() {
-  const dispatch = useAppDispatch()
-  const playerNameMap = useAppSelector((state) => state.user.playerNameMap)
-  const shareScreenManager = useAppSelector((state) => state.computer.shareScreenManager)
-  const myStream = useAppSelector((state) => state.computer.myStream)
-  const peerStreams = useAppSelector((state) => state.computer.peerStreams)
+  const dispatch = useAppDispatch();
+  const playerNameMap = useAppSelector((state) => state.user.playerNameMap);
+  const shareScreenManager = useAppSelector(
+    (state) => state.computer.shareScreenManager,
+  );
+  const myStream = useAppSelector((state) => state.computer.myStream);
+  const peerStreams = useAppSelector((state) => state.computer.peerStreams);
 
   return (
     <Backdrop>
@@ -107,7 +109,7 @@ export default function ComputerDialog() {
           aria-label="close dialog"
           className="close"
           onClick={() => dispatch(closeComputerDialog())}
-          style={{color: 'black'}}
+          style={{ color: "black" }}
         >
           <CloseIcon />
         </IconButton>
@@ -118,9 +120,9 @@ export default function ComputerDialog() {
               color="primary"
               onClick={() => {
                 if (shareScreenManager?.myStream) {
-                  shareScreenManager?.stopScreenShare()
+                  shareScreenManager?.stopScreenShare();
                 } else {
-                  shareScreenManager?.startScreenShare()
+                  shareScreenManager?.startScreenShare();
                 }
               }}
               aria-label="toggle screen share"
@@ -131,7 +133,9 @@ export default function ComputerDialog() {
                 <ScreenShareIcon />
               )}
             </IconButton>
-            <span style={{fontFamily:'Heming',marginLeft:'10px'}}>Click to Share Screen</span>
+            <span style={{ fontFamily: "Heming", marginLeft: "10px" }}>
+              Click to Share Screen
+            </span>
           </IconTextWrapper>
         </div>
 
@@ -139,11 +143,17 @@ export default function ComputerDialog() {
           {myStream && <VideoContainer stream={myStream} playerName="You" />}
 
           {[...peerStreams.entries()].map(([id, { stream }]) => {
-            const playerName = playerNameMap.get(id)
-            return <VideoContainer key={id} playerName={playerName} stream={stream} />
+            const playerName = playerNameMap.get(id);
+            return (
+              <VideoContainer
+                key={id}
+                playerName={playerName}
+                stream={stream}
+              />
+            );
           })}
         </VideoGrid>
       </Wrapper>
     </Backdrop>
-  )
+  );
 }

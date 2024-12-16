@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
 const RoomSchema = new Schema({
   name: { type: String, required: true },
@@ -7,6 +7,6 @@ const RoomSchema = new Schema({
   autoDispose: { type: Boolean, default: true },
 });
 
-const Room = model('Room', RoomSchema);
+const Room = model("Room", RoomSchema);
 
 export default Room;

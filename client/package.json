@@ -1,7 +1,7 @@
 {
-  "name": "skyoffice",
+  "name": "oasis",
   "private": true,
-  "description": "Client for SkyOffice",
+  "description": "Client for oasis",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",

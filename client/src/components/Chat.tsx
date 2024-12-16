@@ -1,22 +1,22 @@
-import React, { useRef, useState, useEffect } from 'react'
-import styled from 'styled-components'
-import Box from '@mui/material/Box'
-import Fab from '@mui/material/Fab'
-import Tooltip from '@mui/material/Tooltip'
-import IconButton from '@mui/material/IconButton'
-import InputBase from '@mui/material/InputBase'
-import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon'
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
-import CloseIcon from '@mui/icons-material/Close'
-import 'emoji-mart/css/emoji-mart.css'
-import { Picker } from 'emoji-mart'
+import React, { useRef, useState, useEffect } from "react";
+import styled from "styled-components";
+import Box from "@mui/material/Box";
+import Fab from "@mui/material/Fab";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import InputBase from "@mui/material/InputBase";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import CloseIcon from "@mui/icons-material/Close";
+import "emoji-mart/css/emoji-mart.css";
+import { Picker } from "emoji-mart";
 
-import phaserGame from '../PhaserGame'
-import Game from '../scenes/Game'
+import phaserGame from "../PhaserGame";
+import Game from "../scenes/Game";
 
-import { getColorByString } from '../util'
-import { useAppDispatch, useAppSelector } from '../hooks'
-import { MessageType, setFocused, setShowChat } from '../stores/ChatStore'
+import { getColorByString } from "../util";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { MessageType, setFocused, setShowChat } from "../stores/ChatStore";
 
 const Backdrop = styled.div`
   position: fixed;
@@ -26,7 +26,7 @@ const Backdrop = styled.div`
   width: 500px;
   max-height: 50%;
   max-width: 100%;
-`
+`;
 
 const Wrapper = styled.div`
   position: relative;
@@ -34,11 +34,11 @@ const Wrapper = styled.div`
   padding: 16px;
   display: flex;
   flex-direction: column;
-`
+`;
 
 const FabWrapper = styled.div`
   margin-top: auto;
-`
+`;
 
 const ChatHeader = styled.div`
   position: relative;
@@ -51,7 +51,7 @@ const ChatHeader = styled.div`
     margin: 7px;
     font-size: 17px;
     text-align: center;
-    font-family: 'Heming';
+    font-family: "Heming";
   }
 
   .close {
@@ -59,8 +59,7 @@ const ChatHeader = styled.div`
     top: 0;
     right: 0;
   }
-  
-`
+`;
 
 const ChatBox = styled(Box)`
   height: 100%;
@@ -68,7 +67,7 @@ const ChatBox = styled(Box)`
   overflow: auto;
   background: #ffffff;
   border: 1px solid #00000029;
-`
+`;
 
 const MessageWrapper = styled.div`
   display: flex;
@@ -95,9 +94,9 @@ const MessageWrapper = styled.div`
   }
 
   :hover {
-    background:rgba(139, 81, 254, 0.38);
+    background: rgba(139, 81, 254, 0.38);
   }
-`
+`;
 
 const InputWrapper = styled.form`
   box-shadow: 10px 10px 10px #00000018;
@@ -105,37 +104,37 @@ const InputWrapper = styled.form`
   border-radius: 0px 0px 10px 10px;
   display: flex;
   flex-direction: row;
-  background: linear-gradient(180deg, #8c51fe,rgb(83, 35, 179));
-`
+  background: linear-gradient(180deg, #8c51fe, rgb(83, 35, 179));
+`;
 
 const InputTextField = styled(InputBase)`
   border-radius: 0px 0px 10px 10px;
   input {
     padding: 5px;
   }
-`
+`;
 
 const EmojiPickerWrapper = styled.div`
   position: absolute;
   bottom: 54px;
   right: 16px;
-`
+`;
 
-const dateFormatter = new Intl.DateTimeFormat('en', {
-  timeStyle: 'short',
-  dateStyle: 'short',
-})
+const dateFormatter = new Intl.DateTimeFormat("en", {
+  timeStyle: "short",
+  dateStyle: "short",
+});
 
 const Message = ({ chatMessage, messageType }) => {
-  const [tooltipOpen, setTooltipOpen] = useState(false)
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
   return (
     <MessageWrapper
       onMouseEnter={() => {
-        setTooltipOpen(true)
+        setTooltipOpen(true);
       }}
       onMouseLeave={() => {
-        setTooltipOpen(false)
+        setTooltipOpen(false);
       }}
     >
       <Tooltip
@@ -159,60 +158,60 @@ const Message = ({ chatMessage, messageType }) => {
         )}
       </Tooltip>
     </MessageWrapper>
-  )
-}
+  );
+};
 
 export default function Chat() {
-  const [inputValue, setInputValue] = useState('')
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
-  const [readyToSubmit, setReadyToSubmit] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
-  const chatMessages = useAppSelector((state) => state.chat.chatMessages)
-  const focused = useAppSelector((state) => state.chat.focused)
-  const showChat = useAppSelector((state) => state.chat.showChat)
-  const dispatch = useAppDispatch()
-  const game = phaserGame.scene.keys.game as Game
+  const [inputValue, setInputValue] = useState("");
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [readyToSubmit, setReadyToSubmit] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const chatMessages = useAppSelector((state) => state.chat.chatMessages);
+  const focused = useAppSelector((state) => state.chat.focused);
+  const showChat = useAppSelector((state) => state.chat.showChat);
+  const dispatch = useAppDispatch();
+  const game = phaserGame.scene.keys.game as Game;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value)
-  }
+    setInputValue(event.target.value);
+  };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Escape') {
-      inputRef.current?.blur()
-      dispatch(setShowChat(false))
+    if (event.key === "Escape") {
+      inputRef.current?.blur();
+      dispatch(setShowChat(false));
     }
-  }
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
     if (!readyToSubmit) {
-      setReadyToSubmit(true)
-      return
+      setReadyToSubmit(true);
+      return;
     }
-    inputRef.current?.blur()
-    const val = inputValue.trim()
-    setInputValue('')
+    inputRef.current?.blur();
+    const val = inputValue.trim();
+    setInputValue("");
     if (val) {
-      game.network.addChatMessage(val)
-      game.myPlayer.updateDialogBubble(val)
+      game.network.addChatMessage(val);
+      game.myPlayer.updateDialogBubble(val);
     }
-  }
+  };
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
     if (focused) {
-      inputRef.current?.focus()
+      inputRef.current?.focus();
     }
-  }, [focused])
+  }, [focused]);
 
   useEffect(() => {
-    scrollToBottom()
-  }, [chatMessages, showChat])
+    scrollToBottom();
+  }, [chatMessages, showChat]);
 
   return (
     <Backdrop>
@@ -232,7 +231,11 @@ export default function Chat() {
             </ChatHeader>
             <ChatBox>
               {chatMessages.map(({ messageType, chatMessage }, index) => (
-                <Message chatMessage={chatMessage} messageType={messageType} key={index} />
+                <Message
+                  chatMessage={chatMessage}
+                  messageType={messageType}
+                  key={index}
+                />
               ))}
               <div ref={messagesEndRef} />
               {showEmojiPicker && (
@@ -242,11 +245,11 @@ export default function Chat() {
                     showSkinTones={false}
                     showPreview={false}
                     onSelect={(emoji) => {
-                      setInputValue(inputValue + emoji.native)
-                      setShowEmojiPicker(!showEmojiPicker)
-                      dispatch(setFocused(true))
+                      setInputValue(inputValue + emoji.native);
+                      setShowEmojiPicker(!showEmojiPicker);
+                      dispatch(setFocused(true));
                     }}
-                    exclude={['recent', 'flags']}
+                    exclude={["recent", "flags"]}
                   />
                 </EmojiPickerWrapper>
               )}
@@ -262,16 +265,19 @@ export default function Chat() {
                 onChange={handleChange}
                 onFocus={() => {
                   if (!focused) {
-                    dispatch(setFocused(true))
-                    setReadyToSubmit(true)
+                    dispatch(setFocused(true));
+                    setReadyToSubmit(true);
                   }
                 }}
                 onBlur={() => {
-                  dispatch(setFocused(false))
-                  setReadyToSubmit(false)
+                  dispatch(setFocused(false));
+                  setReadyToSubmit(false);
                 }}
               />
-              <IconButton aria-label="emoji" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+              <IconButton
+                aria-label="emoji"
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              >
                 <InsertEmoticonIcon />
               </IconButton>
             </InputWrapper>
@@ -279,5 +285,5 @@ export default function Chat() {
         ) : null}
       </Wrapper>
     </Backdrop>
-  )
+  );
 }
