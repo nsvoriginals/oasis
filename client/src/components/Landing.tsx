@@ -1,7 +1,13 @@
 import React from 'react';
 import { Button, Box, Typography, AppBar, Toolbar } from '@mui/material';
 import styled from 'styled-components';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import Features from './Features';
+import Docs from './Docs';
+import About from './About';
 
+// Styled Button
 const StartButton = styled(Button)`
   padding: 15px 30px;
   background-color: #8c51fe;
@@ -14,23 +20,18 @@ const StartButton = styled(Button)`
   }
 `;
 
-type LandingPageProps = {
-  onStart: () => void;
-};
-
-const Landing: React.FC<LandingPageProps> = ({ onStart }) => {
+const Landing: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   return (
     <Box
       sx={{
-        height: '400vh', // Twice the screen height
+        height: '400vh',
         width: '100vw',
         fontFamily: 'Heming',
         display: 'flex',
         flexDirection: 'column',
-        overflowY:'hidden'
+        overflowY: 'hidden',
       }}
     >
-
       {/* Navbar */}
       <AppBar
         position="static"
@@ -49,23 +50,36 @@ const Landing: React.FC<LandingPageProps> = ({ onStart }) => {
         >
           {/* Logo and Title */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <img src="./public/logo1.png" alt="logo" style={{ height: '40px', width: '40px' }} />
-            <Typography variant="h5" sx={{ textAlign: 'center' }}>
-              Oasis
-            </Typography>
+            <img src="./public/logo.png" alt="logo" style={{ height: '40px', width: '40px' }} />
+
+            {/* Link wrapping Typography to navigate to '/' */}
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <Typography
+                variant="h5"
+                sx={{ textAlign: 'center', color: 'black', fontSize: '50px', paddingTop: '10px' }}
+              >
+                OASIS
+              </Typography>
+            </Link>
           </Box>
 
           {/* Navbar Links */}
           <Box sx={{ display: 'flex', gap: '20px', textAlign: 'center' }}>
-            <Typography variant="body1" sx={{ fontSize: '20px', color: 'black' }}>
-              Features
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: '20px', color: 'black' }}>
-              About
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: '20px', color: 'black' }}>
-              Docs
-            </Typography>
+            <Link to="/features" style={{ textDecoration: 'none' }}>
+              <Typography variant="body1" sx={{ fontSize: '30px', color: 'black' }}>
+                Features
+              </Typography>
+            </Link>
+            <Link to="/about" style={{ textDecoration: 'none' }}>
+              <Typography variant="body1" sx={{ fontSize: '30px', color: 'black' }}>
+                About
+              </Typography>
+            </Link>
+            <Link to="/docs" style={{ textDecoration: 'none' }}>
+              <Typography variant="body1" sx={{ fontSize: '30px', color: 'black' }}>
+                Docs
+              </Typography>
+            </Link>
           </Box>
 
           {/* Login and Register Buttons */}
@@ -100,10 +114,10 @@ const Landing: React.FC<LandingPageProps> = ({ onStart }) => {
         </Toolbar>
       </AppBar>
 
-      {/* Landing Hero Section */}
-      <Box
+      {/* Landing Hero Section with Animation */}
+      <motion.div
         id="hero"
-        sx={{
+        style={{
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
@@ -111,54 +125,48 @@ const Landing: React.FC<LandingPageProps> = ({ onStart }) => {
           alignItems: 'center',
           marginTop: '110px',
         }}
+        initial={{ opacity: 0, y: -100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.5 }}
       >
-        {/* Hero Title */}
         <Typography
           variant="h1"
           sx={{
             textAlign: 'center',
-            fontSize: { xs: '70px', sm: '105px' },
+            fontSize: '150px',
             lineHeight: 1.2,
             width: '90vw',
           }}
         >
           Virtual spaces <br />
-          <span style={{ color: '#8C51FE', fontSize: '125px' }}>Re-imagined for</span> <br />
+          <span style={{ color: '#8C51FE', fontSize: '175px' }}>Re-imagined for</span> <br />
           collaborations
         </Typography>
 
-        {/* Hero Subtitle */}
-        <Typography variant="h4" sx={{ color: 'black', marginTop: '10px', fontSize: '24px' }}>
+        <Typography variant="h4" sx={{ color: 'black', marginTop: '50px', fontSize: '24px' }}>
           Connect. Create. Collaborate
         </Typography>
         <Typography variant="h3" sx={{ color: 'black', fontSize: '14px' }}>
           Anywhere
         </Typography>
-        <Button
-          variant="contained"
+        <StartButton
           onClick={onStart}
           sx={{
-            backgroundColor: '#8C51FE',
-            color: 'white',
-            paddingX: '30px',
-            paddingY: '10px',
-            borderRadius: '8px',
-            marginTop: '30px',
+            marginTop: '80px',
             fontSize: '18px',
             textTransform: 'none',
-            '&:hover': {
-              backgroundColor: '#6A3BCF',
-            },
+            backgroundColor: '#8C51FE',
+            color:'white'
           }}
         >
           Start Room
-        </Button>
-      </Box>
+        </StartButton>
+      </motion.div>
 
-      {/* Additional Content Section */}
-      <Box
+      {/* Additional Content Section with Animation */}
+      <motion.div
         id="extra-content"
-        sx={{
+        style={{
           width: '100%',
           flex: 1,
           backgroundColor: 'white',
@@ -166,9 +174,12 @@ const Landing: React.FC<LandingPageProps> = ({ onStart }) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
       >
         <Typography variant="h5">Additional Content Here</Typography>
-      </Box>
+      </motion.div>
     </Box>
   );
 };

@@ -1,46 +1,48 @@
-import http from 'http'
-import express from 'express'
-import cors from 'cors'
-import { Server, LobbyRoom } from 'colyseus'
-import { monitor } from '@colyseus/monitor'
-import { RoomType } from '../types/Rooms'
+import express from 'express';
+import Room from './schema/Model';
+import { Server, LobbyRoom } from 'colyseus';
+import { monitor } from '@colyseus/monitor';
+import connectDB from './db'; // Assuming you have a function to connect to DB
 
-// import socialRoutes from "@colyseus/social/express"
+const app = express();
+const port = Number(process.env.PORT || 2567);
 
-import { SkyOffice } from './rooms/SkyOffice'
+// Middleware
+app.use(express.json()); // For parsing JSON bodies
 
-const port = Number(process.env.PORT || 2567)
-const app = express()
+// Connect to the database
+connectDB();
 
-app.use(cors())
-app.use(express.json())
-// app.use(express.static('dist'))
+// POST route to handle room creation
+app.post('/submitroomdata', async (req, res) => {
+  try {
+    const { name, description, password, autoDispose } = req.body;
 
-const server = http.createServer(app)
+    // Validate the incoming data
+    if (!name || !description) {
+      return res.status(400).json({ error: 'Name and description are required.' });
+    }
+
+    // Create a new room entry in the database
+    const newRoom = new Room({ name, description, password, autoDispose });
+
+    // Save the room data to the database
+    await newRoom.save();
+
+    // Respond with the created room
+    res.status(201).json({ message: 'Room created successfully', room: newRoom });
+  } catch (error) {
+    console.error('Error creating room:', error);
+    res.status(500).json({ error: 'Failed to create room' });
+  }
+});
+
+// Set up Colyseus game server
 const gameServer = new Server({
-  server,
-})
+  server: app,
+});
+gameServer.define('lobby', LobbyRoom);
+gameServer.listen(port);
 
-// register room handlers
-gameServer.define(RoomType.LOBBY, LobbyRoom)
-gameServer.define(RoomType.PUBLIC, SkyOffice, {
-  name: 'Public Lobby',
-  description: 'For making friends and familiarizing yourself with the controls',
-  password: null,
-  autoDispose: false,
-})
-gameServer.define(RoomType.CUSTOM, SkyOffice).enableRealtimeListing()
-
-/**
- * Register @colyseus/social routes
- *
- * - uncomment if you want to use default authentication (https://docs.colyseus.io/server/authentication/)
- * - also uncomment the import statement
- */
-// app.use("/", socialRoutes);
-
-// register colyseus monitor AFTER registering your room handlers
-app.use('/colyseus', monitor())
-
-gameServer.listen(port)
-console.log(`Listening on ws://localhost:${port}`)
+app.use('/colyseus', monitor());
+console.log(`Listening on ws://localhost:${port}`);

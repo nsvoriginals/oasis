@@ -21,7 +21,7 @@ import { MessageType, setFocused, setShowChat } from '../stores/ChatStore'
 const Backdrop = styled.div`
   position: fixed;
   bottom: 60px;
-  left: 0;
+  left: 45px;
   height: 400px;
   width: 500px;
   max-height: 50%;
@@ -180,7 +180,6 @@ export default function Chat() {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Escape') {
-      // move focus back to the game
       inputRef.current?.blur()
       dispatch(setShowChat(false))
     }
@@ -188,18 +187,11 @@ export default function Chat() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-
-    // this is added because without this, 2 things happen at the same
-    // time when Enter is pressed, (1) the inputRef gets focus (from
-    // useEffect) and (2) the form gets submitted (right after the input
-    // gets focused)
     if (!readyToSubmit) {
       setReadyToSubmit(true)
       return
     }
-    // move focus back to the game
     inputRef.current?.blur()
-
     const val = inputValue.trim()
     setInputValue('')
     if (val) {
@@ -284,20 +276,7 @@ export default function Chat() {
               </IconButton>
             </InputWrapper>
           </>
-        ) : (
-          <FabWrapper>
-            <Fab
-              color="secondary"
-              aria-label="showChat"
-              onClick={() => {
-                dispatch(setShowChat(true))
-                dispatch(setFocused(true))
-              }}
-            >
-              <ChatBubbleOutlineIcon />
-            </Fab>
-          </FabWrapper>
-        )}
+        ) : null}
       </Wrapper>
     </Backdrop>
   )
