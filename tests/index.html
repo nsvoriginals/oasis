@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colyseus Game Client</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .container { margin-top: 50px; }
+        #game-log { height: 300px; overflow-y: auto; border: 1px solid #ced4da; padding: 10px; background-color: #ffffff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Colyseus Game Client</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="moveX" class="form-label">X Position:</label>
+                    <input type="number" id="moveX" class="form-control" placeholder="Enter X position">
+                </div>
+                <div class="mb-3">
+                    <label for="moveY" class="form-label">Y Position:</label>
+                    <input type="number" id="moveY" class="form-control" placeholder="Enter Y position">
+                </div>
+                <button id="moveBtn" class="btn btn-primary w-100">Send Move</button>
+            </div>
+            <div class="col-md-6">
+                <h5>Game Log</h5>
+                <div id="game-log"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/colyseus.js/dist/colyseus.js"></script>
+    <script>
+        const logElement = document.getElementById("game-log");
+        const moveBtn = document.getElementById("moveBtn");
+        let room;
+
+        function log(message) {
+            const newMessage = document.createElement("div");
+            newMessage.textContent = message;
+            logElement.appendChild(newMessage);
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        async function connectToServer() {
+            const client = new Colyseus.Client('ws://localhost:4000');
+            try {
+                room = await client.joinOrCreate('game_room');
+                log(`Joined room: ${room.id}`);
+
+                room.onMessage('update', (state) => {
+                    log(`Game state updated: ${JSON.stringify(state)}`);
+                });
+
+                room.onStateChange((state) => {
+                    log(`State changed: ${JSON.stringify(state)}`);
+                });
+
+                room.onLeave(() => {
+                    log('You left the room.');
+                });
+            } catch (error) {
+                log('Error connecting to server: ' + error.message);
+            }
+        }
+
+        moveBtn.addEventListener("click", () => {
+            const x = parseInt(document.getElementById("moveX").value) || 0;
+            const y = parseInt(document.getElementById("moveY").value) || 0;
+
+            if (room) {
+                room.send("move", { x, y });
+                log(`Move sent: x=${x}, y=${y}`);
+            } else {
+                log("Not connected to a room.");
+            }
+        });
+
+        window.onload = connectToServer;
+    </script>
+</body>
+</html>

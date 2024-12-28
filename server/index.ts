@@ -8,7 +8,7 @@ import connectDB from "./db";
 
 import { Oasis } from "./rooms/Oasis";
 
-const port = Number(process.env.PORT || 2567);
+const port = Number(process.env.PORT || 2568);
 const app = express();
 
 app.use(cors());

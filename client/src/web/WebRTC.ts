@@ -109,7 +109,7 @@ export default class WebRTC {
     }
   }
 
-  // method to add new video stream to videoGrid div
+ 
   addVideoStream(video: HTMLVideoElement, stream: MediaStream) {
     video.srcObject = stream;
     video.playsInline = true;
@@ -119,7 +119,7 @@ export default class WebRTC {
     if (this.videoGrid) this.videoGrid.append(video);
   }
 
-  // method to remove video stream (when we are the host of the call)
+  
   deleteVideoStream(userId: string) {
     const sanitizedId = this.replaceInvalidId(userId);
     if (this.peers.has(sanitizedId)) {
@@ -130,7 +130,7 @@ export default class WebRTC {
     }
   }
 
-  // method to remove video stream (when we are the guest of the call)
+  
   deleteOnCalledVideoStream(userId: string) {
     const sanitizedId = this.replaceInvalidId(userId);
     if (this.onCalledPeers.has(sanitizedId)) {

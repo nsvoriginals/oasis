@@ -16,7 +16,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        {/* Conditional rendering for Landing and Start based on gameStarted */}
+        
         <Route
           path="/"
           element={

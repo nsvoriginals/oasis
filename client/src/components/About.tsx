@@ -30,7 +30,7 @@ const About: React.FC = () => {
             alignItems: "center",
           }}
         >
-          {/* Logo and Title */}
+       
           <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <img
               src="./public/logo.png"
@@ -38,7 +38,7 @@ const About: React.FC = () => {
               style={{ height: "40px", width: "40px" }}
             />
 
-            {/* Link wrapping Typography to navigate to '/' */}
+            
             <Link to="/" style={{ textDecoration: "none" }}>
               <Typography
                 variant="h5"
@@ -54,7 +54,7 @@ const About: React.FC = () => {
             </Link>
           </Box>
 
-          {/* Navbar Links */}
+        
           <Box sx={{ display: "flex", gap: "20px", textAlign: "center" }}>
             <Link to="/features" style={{ textDecoration: "none" }}>
               <Typography
@@ -82,7 +82,7 @@ const About: React.FC = () => {
             </Link>
           </Box>
 
-          {/* Login and Register Buttons */}
+    
           <Box sx={{ display: "flex", gap: "15px" }}>
             <Button
               variant="contained"
@@ -121,7 +121,7 @@ const About: React.FC = () => {
           fontFamily: "Heming",
         }}
       >
-        {/* Hero Section */}
+
         <Box
           sx={{
             textAlign: "center",
@@ -153,7 +153,7 @@ const About: React.FC = () => {
           </Typography>
         </Box>
 
-        {/* Project Overview */}
+   
         <Box
           sx={{
             marginBottom: "50px",

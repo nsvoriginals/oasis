@@ -7,7 +7,7 @@ import { openWhiteboardDialog } from "../stores/WhiteboardStore";
 export default class Whiteboard extends Item {
   id?: string;
   currentUsers = new Set<string>();
-
+ne
   constructor(
     scene: Phaser.Scene,
     x: number,
