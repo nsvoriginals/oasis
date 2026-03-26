@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const connectDB = async () => {
   try {
     const uri: string =
-      "mongodb+srv://iamnsv:iamnsv@cluster0.dwbxe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+      "DB_URL";
 
     await mongoose.connect(uri);
 
